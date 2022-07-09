@@ -19,6 +19,7 @@
             @onCreated="handleCreated"
         />
       </div>
+
     </el-main>
   </el-container>
 </template>
@@ -28,6 +29,7 @@
 
   import { onBeforeUnmount, ref, shallowRef, onMounted } from 'vue'
   import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
+  import md5 from 'js-md5'
 
   export default {
     components: { Editor, Toolbar },
@@ -60,6 +62,7 @@
       }
       const printHtml = () => {
         console.log(valueHtml.value)
+        console.log(md5("xinsin"))
       }
 
       return {
@@ -69,7 +72,8 @@
         mode: 'default', // 或 'simple'
         toolbarConfig,
         editorConfig,
-        handleCreated
+        handleCreated,
+        md5
       };
     }
   }
