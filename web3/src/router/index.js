@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory} from 'vue-router'
-const HelloWorld = ()=> import('../components/HelloWorld.vue')
+const index = ()=> import('../views/IndexHome.vue')
 const routes = [
-    {path: '/',name: 'helloWorld',component: HelloWorld}
+    {path: '/',name: 'index',component: index}
 ]
 const router = createRouter({
     history: createWebHistory(),
