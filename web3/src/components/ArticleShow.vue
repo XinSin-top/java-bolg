@@ -28,15 +28,21 @@ export default {
 @import "../common/style/globalStyle";
 .articleContainer{
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  // justify-content: center;
+  // flex-wrap: wrap;
   margin-bottom: 10px;
   margin-right: auto !important;
 }
 .indexBtm{
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  margin-top: 5px;
+  // flex-direction: row;
+  // flex-wrap: wrap;
+  i, span {
+    display: inherit;
+    vertical-align: middle;
+    line-height: 10px;
+  }
 }
 /*
 *, ::after, ::before{
@@ -54,16 +60,17 @@ export default {
   line-height: 10px;
 }
 .iconStyle{
-  margin-top: 15px;
+  // margin-top: 15px;
 }
 .articleImg{
   width: 200px;
-  height: 150px;
+  // height: 150px;
   box-shadow: 0 5px 11px 0 rgb(0 0 0 / 18%), 0 4px 15px 0 rgb(0 0 0 / 15%);
   margin-right: 15px;
   border-radius: 3px;
 }
 .indexHeader{
+  text-align: left;
   .pr-font-family;
   margin: 0 0 10px;
   a{
@@ -80,10 +87,10 @@ export default {
   }
 }
 .articleText{
-  height: 75px;
-  float: left;
-  overflow: hidden;
+  // height: 75px;
+  // float: left;
   margin: 0;
+  text-align: left;
   a{
     color: black;
     text-decoration: none;
@@ -95,4 +102,6 @@ export default {
     }
   }
 }
+
+
 </style>
