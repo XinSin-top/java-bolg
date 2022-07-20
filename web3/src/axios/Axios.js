@@ -7,7 +7,7 @@ const Axios_instance = axios.create({
   withCredentials: false    // 是否允许带cookie这些
 })
 
-//响应拦截器
+/*//响应拦截器
 Axios_instance.interceptors.response.use(function (response){
   if(response.headers.token != null){
     window.localStorage.setItem("token",response.headers.token);
@@ -22,5 +22,5 @@ Axios_instance.interceptors.request.use(function (config){
   return config;
 }),function (error){
   return Promise.reject(error);
-}
+}*/
 export default Axios_instance;

@@ -16,7 +16,20 @@
 
     </el-header>
     <el-main>
-      <article-show v-for="i in 10" v-bind:key="i" ></article-show>
+      <article-show
+          v-for="item in data"
+          v-bind:key="item.id"
+          :title="item.title"
+          :author="item.author"
+          :text="item.article"
+          :href="url + item.uuid"
+          :date="item.time"
+          :star="zero"
+          :watch="zero"
+          img-href='http://localhost:8000/api/getImages/8358a6a5dc5abf72235a46d2945ce0f9'
+      >
+
+      </article-show>
     </el-main>
   </el-container>
 </template>
@@ -25,15 +38,34 @@
   // import md5 from 'js-md5'
   import articleShow from "@/components/ArticleShow";
   import NavBar from "@/components/NavBar";
-  import {ref} from "vue";
+  import {onMounted, ref} from "vue";
+  import {selectArticle} from "@/axios/request";
+
   export default {
     components:{articleShow,NavBar},
     setup(){
       const articleCount = ref(0);
       const articleViewCount = ref(0);
+      const data = ref({});
+
+      //测试数据
+      const zero = ref("0");
+      const url = ref("http://localhost:8000/api/selectArticle/")
+
+      const update = async () => {
+        data.value = (await selectArticle().then()).data.data;
+        console.log(data.value)
+      }
+      onMounted(()=>{
+        update();
+      })
       return{
         articleCount,
-        articleViewCount
+        articleViewCount,
+        update,
+        data,
+        zero,
+        url
       }
     }
   }
@@ -74,5 +106,9 @@
   }
   body{
     .bk-color;
+  }
+  .el-main{
+    margin-left: 400px;
+    margin-right: 400px;
   }
 </style>

@@ -1,15 +1,33 @@
 <template>
   <div class="pr-text-center articleContainer">
-    <div class="indexImg"><img src="../assets/main.png" class="articleImg"  alt="这是一张图片"/></div>
+    <div class="indexImg"><img :src="imgHref" class="articleImg"  alt="这是一张图片"/></div>
     <div style="margin-right: auto !important;">
-      <h2 class="indexHeader"><router-link to="#">关于arch双系统安装以及初始化操作</router-link></h2>
-      <p class="articleText"><router-link to="#">TOTP 基于时间的一次性密码算法（Time-Based One-Time Password）是一种根据预共享的密钥与当前时间计算一次性密码的算法，利用不同设备时间相同的特性，将时间作为特定算法的一部分从而达到无需网络进行安全验证的目的。 该算法有两个输入，一个输出，一个输入是随机生成的密钥，密钥需要被验证方和验证器同时持有，另一个输入即系统时间，通常是 UNIX 时，输出则是两方相同的验证码。一般的验证码有效期为 30 秒，每 30</router-link></p>
-      <div >
+      <h2 class="indexHeader"><router-link :to="href">{{title}}</router-link></h2>
+      <p class="articleText"><router-link :to="href">{{text}}</router-link></p>
+      <div>
         <div class="indexBtm">
           <el-icon class="iconStyle">
             <calendar />
           </el-icon>
-          <span class="iconText">123</span>
+          <span class="iconText">{{date}}</span>
+        </div>
+        <div class="indexBtm">
+          <el-icon class="iconStyle">
+            <star />
+          </el-icon>
+          <span class="iconText">{{star}}</span>
+        </div>
+        <div class="indexBtm">
+          <el-icon class="iconStyle">
+            <user />
+          </el-icon>
+          <span class="iconText">{{author}}</span>
+        </div>
+        <div class="indexBtm">
+          <el-icon class="iconStyle">
+            <view />
+          </el-icon>
+          <span class="iconText">{{watch}}</span>
         </div>
       </div>
     </div>
@@ -17,10 +35,26 @@
 </template>
 
 <script>
-import { Calendar } from '@element-plus/icons-vue';
+import { Calendar,Star,User,View } from '@element-plus/icons-vue';
+
+
 export default {
   components:{
-    Calendar
+    Calendar,
+    Star,
+    // eslint-disable-next-line vue/no-unused-components
+    View,
+    User,
+  },
+  props:{
+    title: String,
+    text:String,
+    href:String,
+    imgHref:String,
+    date:String,
+    star:String,
+    author:String,
+    watch:String,
   }
 }
 </script>
@@ -28,26 +62,18 @@ export default {
 @import "../common/style/globalStyle";
 .articleContainer{
   display: flex;
-  // justify-content: center;
-  // flex-wrap: wrap;
   margin-bottom: 10px;
   margin-right: auto !important;
 }
 .indexBtm{
   display: flex;
   margin-top: 5px;
-  // flex-direction: row;
-  // flex-wrap: wrap;
   i, span {
     display: inherit;
     vertical-align: middle;
     line-height: 10px;
   }
 }
-/*
-*, ::after, ::before{
-  box-sizing: border-box;
-}*/
 .indexImg{
   margin-right: auto !important;
 }
@@ -64,7 +90,6 @@ export default {
 }
 .articleImg{
   width: 200px;
-  // height: 150px;
   box-shadow: 0 5px 11px 0 rgb(0 0 0 / 18%), 0 4px 15px 0 rgb(0 0 0 / 15%);
   margin-right: 15px;
   border-radius: 3px;
@@ -102,6 +127,4 @@ export default {
     }
   }
 }
-
-
 </style>

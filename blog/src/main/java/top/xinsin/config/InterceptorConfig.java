@@ -5,28 +5,33 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import top.xinsin.interceptor.AuthenticationInterceptor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created On 7/8/22 9:01 PM
  *
  * @author xinsin
  * @version 1.0.0
  */
-@Configuration
+//@Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AuthenticationInterceptor()).
-                //拦截
                 addPathPatterns("/**").
-                //放行登录接口
-                excludePathPatterns("/api/login").
-                //放行文章接口
-                excludePathPatterns("/api/getArticles").
-                //放行注册接口
-                excludePathPatterns("/api/getArticleDetails").
-                //放行调试接口
-                excludePathPatterns("/api/debug").
+                excludePathPatterns(getExcludePathPatterns());
+    }
 
-                excludePathPatterns("/api/register");
+    private List<String> getExcludePathPatterns() {
+        List<String> excludePathPatterns = new ArrayList<>();
+        excludePathPatterns.add("/api/login");
+        excludePathPatterns.add("/api/getArticles");
+        excludePathPatterns.add("/api/getArticleDetails");
+        excludePathPatterns.add("/api/debug");
+        excludePathPatterns.add("/api/register");
+        excludePathPatterns.add("/api/upload/images");
+        excludePathPatterns.add("/api/getImages/");
+        return excludePathPatterns;
     }
 }

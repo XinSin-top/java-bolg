@@ -29,12 +29,31 @@ import 'codemirror/addon/scroll/simplescrollbars';
 import 'codemirror/addon/scroll/simplescrollbars.css';
 // style
 import 'codemirror/lib/codemirror.css';
+//tips
+import createTipPlugin from '@kangc/v-md-editor/lib/plugins/tip/index';
+import '@kangc/v-md-editor/lib/plugins/tip/tip.css';
+//emoji
+import createEmojiPlugin from '@kangc/v-md-editor/lib/plugins/emoji/index';
+import '@kangc/v-md-editor/lib/plugins/emoji/emoji.css';
+//代码行号
+import createLineNumbertPlugin from '@kangc/v-md-editor/lib/plugins/line-number/index';
+//代码复制
+import createCopyCodePreview from '@kangc/v-md-editor/lib/plugins/copy-code/preview';
+import '@kangc/v-md-editor/lib/plugins/copy-code/copy-code.css';
 
 import hljs from 'highlight.js';
+
 
 VueMarkdownEditor.Codemirror = Codemirror;
 VueMarkdownEditor.use(githubTheme, {
     Hljs:hljs,
-});
+}).use(createTipPlugin())
+    .use(createEmojiPlugin())
+    .use(createLineNumbertPlugin())
+    .use(createCopyCodePreview());
 
-createApp(App).use(VueMarkdownEditor).use(ElementPlus).use(router).mount('#app')
+createApp(App)
+    .use(VueMarkdownEditor)
+    .use(ElementPlus)
+    .use(router)
+    .mount('#app')

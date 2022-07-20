@@ -24,5 +24,12 @@ spring:
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
   mybatis:
-    mapper-locations: classpath:top/xinsin/dao/*Mapping.xml
+    mapper-locations: classpath:top/xinsin/dao/*Mapper.xml
     type-aliases-package: top.xinsin.dao
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+      enabled: true
+savePath:
+  res/img/

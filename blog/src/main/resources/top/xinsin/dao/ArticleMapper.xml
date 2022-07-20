@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.xinsin.dao.ArticleMapper">
+
+    <insert id="insertArticle" parameterType="top.xinsin.pojo.Article" keyProperty="id" useGeneratedKeys="true">
+        insert into article(title, article, author, uuid) VALUES (#{title}, #{article}, #{author}, #{uuid});
+    </insert>
+    <update id="updateArticle" parameterType="top.xinsin.pojo.Article">
+        update article set article=#{article}, time=#{time} where uuid=#{uuid};
+    </update>
+    <select id="selectArticleTitle" resultType="top.xinsin.pojo.Article">
+        select * from article where title=#{title};
+    </select>
+    <select id="selectArticle" resultType="top.xinsin.pojo.Article">
+        select * from article;
+    </select>
+    <select id="selectArticleUUID" resultType="top.xinsin.pojo.Article">
+        select * from article where uuid=#{uuid};
+    </select>
+</mapper>
