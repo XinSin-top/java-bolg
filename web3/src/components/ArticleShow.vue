@@ -1,11 +1,11 @@
 <template>
   <div class="pr-text-center articleContainer">
-    <img src="../assets/main.png" class="articleImg">
-    <div>
+    <div class="indexImg"><img src="../assets/main.png" class="articleImg"  alt="这是一张图片"/></div>
+    <div style="margin-right: auto !important;">
       <h2 class="indexHeader"><router-link to="#">关于arch双系统安装以及初始化操作</router-link></h2>
       <p class="articleText"><router-link to="#">TOTP 基于时间的一次性密码算法（Time-Based One-Time Password）是一种根据预共享的密钥与当前时间计算一次性密码的算法，利用不同设备时间相同的特性，将时间作为特定算法的一部分从而达到无需网络进行安全验证的目的。 该算法有两个输入，一个输出，一个输入是随机生成的密钥，密钥需要被验证方和验证器同时持有，另一个输入即系统时间，通常是 UNIX 时，输出则是两方相同的验证码。一般的验证码有效期为 30 秒，每 30</router-link></p>
-      <div>
-        <div>
+      <div >
+        <div class="indexBtm">
           <el-icon class="iconStyle">
             <calendar />
           </el-icon>
@@ -26,6 +26,25 @@ export default {
 </script>
 <style lang="less" scoped>
 @import "../common/style/globalStyle";
+.articleContainer{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  margin-right: auto !important;
+}
+.indexBtm{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+/*
+*, ::after, ::before{
+  box-sizing: border-box;
+}*/
+.indexImg{
+  margin-right: auto !important;
+}
 .iconText{
   margin: 0;
   padding: 0;
@@ -74,17 +93,6 @@ export default {
       transition: color 2s;
       color:@primary-color;
     }
-  }
-}
-.articleContainer{
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
-  div{
-    width: 600px;
-    //height: 150px;
-    text-align: left;
   }
 }
 </style>
