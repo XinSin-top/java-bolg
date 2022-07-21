@@ -16,7 +16,7 @@ import java.util.ArrayList;
 @Repository
 public interface ArticleMapper {
 
-    Integer insertArticle(Article article);
+    void insertArticle(Article article);
 
     Article selectArticleTitle(String title);
     Article selectArticleUuid(String uuid);
@@ -25,4 +25,6 @@ public interface ArticleMapper {
     ArrayList<Article> selectArticle();
 
     Article selectArticleUUID(String uuid);
+
+    Integer selectArticleId(String uuid);
 }

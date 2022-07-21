@@ -24,8 +24,8 @@
           :text="item.article"
           :href="url + item.uuid"
           :date="item.time"
-          :star="zero"
-          :watch="zero"
+          :star="item.articleStar"
+          :watch="item.articleWatch"
           img-href='http://localhost:8000/api/getImages/8358a6a5dc5abf72235a46d2945ce0f9'
       >
 
@@ -38,7 +38,7 @@
   import articleShow from "@/components/ArticleShow";
   import NavBar from "@/components/NavBar";
   import {onMounted, ref} from "vue";
-  import {selectArticle} from "@/axios/request";
+  import {selectArticle,selectStar} from "@/axios/request";
 
   export default {
     components:{articleShow,NavBar},
@@ -46,13 +46,26 @@
       const articleCount = ref(0);
       const articleViewCount = ref(0);
       const data = ref({});
-
-      //测试数据
-      const zero = ref("0");
+      const dataStar = ref({});
       const url = ref("/article/")
 
       const update = async () => {
         data.value = (await selectArticle().then()).data.data;
+        dataStar.value = (await selectStar().then()).data.data;
+        articleCount.value = data.value.length;
+        let watchs = 0;
+        for (let i = 0; i < dataStar.value.length; i++) {
+          watchs += dataStar.value[i].articleWatch;
+        }
+        articleViewCount.value = watchs;
+        for (let i = 0; i < data.value.length; i++) {
+          for (let j = 0; j <dataStar.value.length; j++) {
+            if ( data.value[i].id == dataStar.value[i].articleId){
+              data.value[i].articleStar = dataStar.value[i].articleStar
+              data.value[i].articleWatch = dataStar.value[i].articleWatch
+            }
+          }
+        }
         console.log(data.value)
       }
       onMounted(()=>{
@@ -63,7 +76,7 @@
         articleViewCount,
         update,
         data,
-        zero,
+        dataStar,
         url
       }
     }

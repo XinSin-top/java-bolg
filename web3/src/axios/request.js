@@ -54,3 +54,42 @@ export function tokenVerify(){
     }
   });
 }
+export function addStar(id){
+  return Axios({
+    url: "/api/addStar",
+    method: "get",
+    headers:{
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    params:{"articleId":id}
+  });
+}
+export function removeStar(id){
+  return Axios({
+    url: "/api/removeStar",
+    method: "get",
+    headers:{
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    params:{"articleId":id}
+  });
+}
+export function addWatch(id){
+  return Axios({
+    url: "/api/addWatch",
+    method: "get",
+    headers:{
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    params:{"articleId":id}
+  });
+}
+export function selectStar(){
+  return Axios({
+    url: "/api/selectStar",
+    method: "get",
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  });
+}

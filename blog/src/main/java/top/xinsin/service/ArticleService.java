@@ -26,11 +26,12 @@ import java.util.UUID;
 public class ArticleService {
 
     private final ArticleMapper articleMapper;
+    private final StarService starService;
 
     @Autowired
-
-    public ArticleService(ArticleMapper articleMapper) {
+    public ArticleService(ArticleMapper articleMapper, StarService starService) {
         this.articleMapper = articleMapper;
+        this.starService = starService;
     }
 
     public ResultData<JSONObject> saveArticle(Article article) {
@@ -53,7 +54,9 @@ public class ArticleService {
             log.info("文章不存在,正在进行插入");
             String uuid = UUID.randomUUID().toString().replace("-","");
             article.setUuid(uuid);
-            Integer id = articleMapper.insertArticle(article);
+            articleMapper.insertArticle(article);
+            Integer id = articleMapper.selectArticleId(article.getUuid());
+            starService.insertStar(id);
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("id",id);
             jsonObject.put("uuid",uuid);
@@ -66,6 +69,8 @@ public class ArticleService {
     }
     public ResultData<JSONObject> selectArticleUUID(String uuid) {
         log.info("查询文章UUID");
-        return ResultData.success(JSONObject.parseObject(JSONObject.toJSONString(articleMapper.selectArticleUUID(uuid))));
+        Article article = articleMapper.selectArticleUUID(uuid);
+        starService.addWatch(article.getId());
+        return ResultData.success(JSONObject.parseObject(JSONObject.toJSONString(article)));
     }
 }
