@@ -7,7 +7,7 @@ const Axios_instance = axios.create({
   withCredentials: false    // 是否允许带cookie这些
 })
 
-/*//响应拦截器
+//响应拦截器
 Axios_instance.interceptors.response.use(function (response){
   if(response.headers.token != null){
     window.localStorage.setItem("token",response.headers.token);
@@ -18,9 +18,12 @@ Axios_instance.interceptors.response.use(function (response){
 }
 //请求拦截器
 Axios_instance.interceptors.request.use(function (config){
-  config.headers["Access-Token"] = window.localStorage.getItem("token");
+  let token = window.localStorage.getItem("token");
+  if (token != null & token !== '' && token !== 'undefined'){
+    config.headers["Access-Token"] = window.localStorage.getItem("token");
+  }
   return config;
 }),function (error){
   return Promise.reject(error);
-}*/
+}
 export default Axios_instance;

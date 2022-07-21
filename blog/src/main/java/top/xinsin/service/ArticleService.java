@@ -11,6 +11,7 @@ import top.xinsin.util.ResultData;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -34,7 +35,14 @@ public class ArticleService {
 
     public ResultData<JSONObject> saveArticle(Article article) {
         Article article1 = articleMapper.selectArticleTitle(article.getTitle());
-        if (article1 != null) {
+        Optional<String> optional = Optional.ofNullable(article.getUuid());
+        Article article2 = null;
+        if (optional.isPresent()) {
+            log.info("uuid is not null");
+            log.info("uuid is {}", optional.get());
+            article2 = articleMapper.selectArticleUuid(optional.get());
+        }
+        if (article1 != null || article2 != null) {
             log.info("文章已存在,正在进行更新");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String format = sdf.format(new Date());

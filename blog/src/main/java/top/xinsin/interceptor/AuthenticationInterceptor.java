@@ -1,9 +1,12 @@
 package top.xinsin.interceptor;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.auth0.jwt.exceptions.AlgorithmMismatchException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import top.xinsin.enums.HttpCodes;
 import top.xinsin.util.JwtTokenUtils;
@@ -17,6 +20,7 @@ import top.xinsin.util.StringUtils;
  * @version 1.0.0
  */
 @Slf4j
+@Component
 public class AuthenticationInterceptor implements HandlerInterceptor {
 
     @Override
@@ -46,7 +50,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         }
 
         response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write(resultData.toString());
+        response.getWriter().write(JSONObject.toJSONString(resultData));
         return false;
     }
 }

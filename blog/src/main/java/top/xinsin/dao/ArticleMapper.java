@@ -19,6 +19,7 @@ public interface ArticleMapper {
     Integer insertArticle(Article article);
 
     Article selectArticleTitle(String title);
+    Article selectArticleUuid(String uuid);
 
     void updateArticle(Article article);
     ArrayList<Article> selectArticle();

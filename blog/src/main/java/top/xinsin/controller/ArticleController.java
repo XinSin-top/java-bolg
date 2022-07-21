@@ -34,7 +34,8 @@ public class ArticleController {
         return articleService.selectArticle();
     }
     @GetMapping("/api/selectArticleUUID/{uuid}")
-    public ResultData<JSONObject> selectArticleUUID(@RequestParam String uuid) {
+    @ResponseBody
+    public ResultData<JSONObject> selectArticleUUID(@PathVariable String uuid) {
         return articleService.selectArticleUUID(uuid);
     }
 

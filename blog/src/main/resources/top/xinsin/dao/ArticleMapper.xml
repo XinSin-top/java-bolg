@@ -6,7 +6,7 @@
         insert into article(title, article, author, uuid) VALUES (#{title}, #{article}, #{author}, #{uuid});
     </insert>
     <update id="updateArticle" parameterType="top.xinsin.pojo.Article">
-        update article set article=#{article}, time=#{time} where uuid=#{uuid};
+        update article set article=#{article}, time=#{time},title=#{title} where uuid=#{uuid};
     </update>
     <select id="selectArticleTitle" resultType="top.xinsin.pojo.Article">
         select * from article where title=#{title};
@@ -15,6 +15,9 @@
         select * from article;
     </select>
     <select id="selectArticleUUID" resultType="top.xinsin.pojo.Article">
+        select * from article where uuid=#{uuid};
+    </select>
+    <select id="selectArticleUuid" resultType="top.xinsin.pojo.Article">
         select * from article where uuid=#{uuid};
     </select>
 </mapper>

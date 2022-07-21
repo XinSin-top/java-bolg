@@ -37,11 +37,11 @@
 <script>
 import { Calendar,Star,User,View } from '@element-plus/icons-vue';
 
-
 export default {
   components:{
     Calendar,
     Star,
+    //todo 这里view组件不好使
     // eslint-disable-next-line vue/no-unused-components
     View,
     User,
@@ -112,10 +112,10 @@ export default {
   }
 }
 .articleText{
-  // height: 75px;
-  // float: left;
   margin: 0;
   text-align: left;
+  height: 70px;
+  overflow: hidden;
   a{
     color: black;
     text-decoration: none;

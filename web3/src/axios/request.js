@@ -1,6 +1,6 @@
 import Axios from "./Axios";
 
-export function Login(datas){
+export function login(datas){
   return Axios({
     url: "/api/login",
     method: "post",
@@ -38,7 +38,16 @@ export function selectArticle(){
 }
 export function selectArticleUUID(uuid){
   return Axios({
-    url: "/api/selectArticle/" + uuid,
+    url: "/api/selectArticleUUID/" + uuid,
+    method: "get",
+    headers:{
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  });
+}
+export function tokenVerify(){
+  return Axios({
+    url: "/api/tokenVerify",
     method: "get",
     headers:{
       'Content-Type': 'application/x-www-form-urlencoded'

@@ -35,7 +35,6 @@
 </template>
 
 <script>
-  // import md5 from 'js-md5'
   import articleShow from "@/components/ArticleShow";
   import NavBar from "@/components/NavBar";
   import {onMounted, ref} from "vue";
@@ -50,7 +49,7 @@
 
       //测试数据
       const zero = ref("0");
-      const url = ref("http://localhost:8000/api/selectArticle/")
+      const url = ref("/article/")
 
       const update = async () => {
         data.value = (await selectArticle().then()).data.data;
@@ -71,7 +70,7 @@
   }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
   @import "../common/style/globalStyle";
   .avatar_img{
     margin-top: 10px;

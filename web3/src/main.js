@@ -1,8 +1,9 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import router from './router/index'
+
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-import router from './router/index'
 
 import VueMarkdownEditor from '@kangc/v-md-editor/lib/codemirror-editor';
 import '@kangc/v-md-editor/lib/style/codemirror-editor.css';
@@ -41,6 +42,10 @@ import createLineNumbertPlugin from '@kangc/v-md-editor/lib/plugins/line-number/
 import createCopyCodePreview from '@kangc/v-md-editor/lib/plugins/copy-code/preview';
 import '@kangc/v-md-editor/lib/plugins/copy-code/copy-code.css';
 
+//预览
+import VMdPreview from '@kangc/v-md-editor/lib/preview';
+import '@kangc/v-md-editor/lib/style/preview.css';
+
 import hljs from 'highlight.js';
 
 
@@ -51,9 +56,13 @@ VueMarkdownEditor.use(githubTheme, {
     .use(createEmojiPlugin())
     .use(createLineNumbertPlugin())
     .use(createCopyCodePreview());
+VMdPreview.use(githubTheme,{
+    Hljs:hljs
+})
 
 createApp(App)
     .use(VueMarkdownEditor)
+    .use(VMdPreview)
     .use(ElementPlus)
     .use(router)
     .mount('#app')

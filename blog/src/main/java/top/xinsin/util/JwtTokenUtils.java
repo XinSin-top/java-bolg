@@ -15,7 +15,7 @@ import java.util.Map;
  * @version 1.0.0
  */
 public class JwtTokenUtils {
-    private static final String KEY = "G%k7H4lK;D1@L87Kio8j^ns56lJ68";
+    private static final String KEY = "!dJ2~K-9<X_:.z:8*OD@(KL}*$>{?AG^@P:Z3";
 
     /**
      * 创建token

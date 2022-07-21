@@ -1,6 +1,7 @@
 <template>
   <el-container>
     <el-header>
+      <nav-bar></nav-bar>
     </el-header>
     <el-main>
       <el-tabs
@@ -9,7 +10,21 @@
           class="demo-tabs"
           @tab-click="handleClick"
       >
-        <el-tab-pane label="查看文章" name="first"></el-tab-pane>
+        <el-tab-pane label="查看文章" name="first" class="tabFirstPane">
+          <article-show
+              v-for="item in showDataArticle"
+              v-bind:key="item.id"
+              :title="item.title"
+              :author="item.author"
+              :text="item.article"
+              :href="url + item.uuid"
+              :date="item.time"
+              :star="zero"
+              :watch="zero"
+              img-href='http://localhost:8000/api/getImages/8358a6a5dc5abf72235a46d2945ce0f9'
+          >
+          </article-show>
+        </el-tab-pane>
         <el-tab-pane label="新建文章" name="second">
           <v-md-editor
               v-model="text"
@@ -45,10 +60,17 @@
 
 <script>
 import {ref, reactive} from "vue";
-import {uploadImages,saveArticle} from "@/axios/request";
+import {
+  uploadImages,
+  saveArticle,
+  selectArticle
+} from "@/axios/request";
+import {onMounted} from "vue";
+import articleShow from "@/components/ArticleShow";
+import NavBar from "@/components/NavBar";
 
 export default {
-
+  components:{articleShow,NavBar},
   setup(){
     const text = ref("" +
         "``` java\n" +
@@ -64,10 +86,26 @@ export default {
       title:""
     })
 
+    const articleCount = ref(0);
+    const articleViewCount = ref(0);
+    const showDataArticle = ref({});
+
+    //测试数据
+    const zero = ref("0");
+    const url = ref("/editorArticle/")
+
+    const update = async () => {
+      showDataArticle.value = (await selectArticle().then()).data.data;
+    }
+
+    onMounted(()=>{
+      update();
+    })
+
+    //图片上传
     // eslint-disable-next-line no-unused-vars
     const handleUploadImage = (event, insertImage, files) => {
       const formData = new FormData()
-      console.log(files);
       formData.append("file",files[0])
       uploadImg(formData);
       insertImage({
@@ -78,6 +116,7 @@ export default {
       data.value =  (await uploadImages(file).then()).data.data;
       console.log(data.value.url)
     }
+    //md保存
     // eslint-disable-next-line no-unused-vars
     const saveText = async (text,html) => {
       let datas = {};
@@ -92,12 +131,14 @@ export default {
         sessionStorage.setItem("uuid",data.uuid);
       }
     }
+    //模态框开闭
     // eslint-disable-next-line no-unused-vars
     const handleClick = (tab, event) => {
       if (tab.props.name === "second"){
         dialogFormVisible.value = true;
       }
     }
+
     return{
       text,
       handleUploadImage,
@@ -107,6 +148,12 @@ export default {
       formLabelWidth,
       form,
       handleClick,
+      articleCount,
+      articleViewCount,
+      update,
+      showDataArticle,
+      zero,
+      url
     }
   }
 }
@@ -116,5 +163,15 @@ export default {
 @import "../../common/style/globalStyle";
 .el-tabs__item.is-active.is-top{
   color: @primary-color !important;
+}
+body{
+  .bk-color;
+}
+.tabFirstPane{
+  margin-left: 400px;
+  margin-right: 400px;
+}
+.el-tabs--card>.el-tabs__header .el-tabs__item.is-active{
+  border-bottom-color: @primary-color-background;
 }
 </style>
