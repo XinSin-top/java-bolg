@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { ElMessage } from 'element-plus'
 
 const Axios_instance = axios.create({
   baseURL:'http://localhost:8000',
@@ -11,6 +12,11 @@ const Axios_instance = axios.create({
 Axios_instance.interceptors.response.use(function (response){
   if(response.headers.token != null){
     window.localStorage.setItem("token",response.headers.token);
+  }
+  let status = response.data.status;
+  if(status === 250 || status === 251){
+    ElMessage.error("令牌错误请重新登录,或者联系管理员")
+    window.localStorage.clear();
   }
   return response;
 }),function (error){

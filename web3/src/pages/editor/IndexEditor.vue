@@ -19,9 +19,9 @@
               :text="item.article"
               :href="url + item.uuid"
               :date="item.time"
-              :star="zero"
-              :watch="zero"
-              img-href='http://localhost:8000/api/getImages/8358a6a5dc5abf72235a46d2945ce0f9'
+              :star="item.articleStar"
+              :watch="item.articleWatch"
+              :img-href="item.imgHref"
           >
           </article-show>
         </el-tab-pane>
@@ -60,24 +60,16 @@
 
 <script>
 import {ref, reactive} from "vue";
-import {
-  uploadImages,
-  saveArticle,
-  selectArticle
-} from "@/axios/request";
+import {uploadImages,saveArticle,selectArticle, selectStar} from "@/axios/request";
 import {onMounted} from "vue";
 import articleShow from "@/components/ArticleShow";
 import NavBar from "@/components/NavBar";
+import {regularMatch} from "@/common/js/global";
 
 export default {
   components:{articleShow,NavBar},
   setup(){
-    const text = ref("" +
-        "``` java\n" +
-        "public static void main(String[] args){\n" +
-        "\n" +
-        "}\n" +
-        "```");
+    const text = ref("");
     const data = ref();
     const activeName = ref("first");
     const dialogFormVisible = ref(false);
@@ -89,13 +81,33 @@ export default {
     const articleCount = ref(0);
     const articleViewCount = ref(0);
     const showDataArticle = ref({});
+    const dataStar = ref();
 
     //测试数据
-    const zero = ref("0");
+    const zero = ref(0);
     const url = ref("/editorArticle/")
 
     const update = async () => {
       showDataArticle.value = (await selectArticle().then()).data.data;
+      dataStar.value = (await selectStar().then()).data.data;
+      articleCount.value = showDataArticle.value.length;
+      let watchs = 0;
+      for (let i = 0; i < dataStar.value.length; i++) {
+        watchs += dataStar.value[i].articleWatch;
+        let imgHref = regularMatch(showDataArticle.value[i].article)
+        if (imgHref != null){
+          showDataArticle.value[i].imgHref = imgHref;
+        }
+      }
+      articleViewCount.value = watchs;
+      for (let i = 0; i < showDataArticle.value.length; i++) {
+        for (let j = 0; j <dataStar.value.length; j++) {
+          if ( showDataArticle.value[i].id === dataStar.value[i].articleId){
+            showDataArticle.value[i].articleStar = dataStar.value[i].articleStar
+            showDataArticle.value[i].articleWatch = dataStar.value[i].articleWatch
+          }
+        }
+      }
     }
 
     onMounted(()=>{

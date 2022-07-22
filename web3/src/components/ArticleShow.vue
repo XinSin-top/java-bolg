@@ -1,10 +1,12 @@
 <template>
   <div class="pr-text-center articleContainer">
-    <div class="indexImg"><img :src="imgHref" class="articleImg"  alt="这是一张图片"/></div>
+    <div v-if="imgHref != null">
+      <div class="indexImg"><img :src="imgHref" class="articleImg"  alt="这是一张图片"/></div>
+    </div>
     <div style="margin-right: auto !important;">
       <h2 class="indexHeader"><router-link :to="href">{{title}}</router-link></h2>
       <p class="articleText"><router-link :to="href">{{text}}</router-link></p>
-      <div>
+      <div style="display: flex">
         <div class="indexBtm">
           <el-icon class="iconStyle">
             <calendar />
@@ -25,7 +27,7 @@
         </div>
         <div class="indexBtm">
           <el-icon class="iconStyle">
-            <view />
+            <View />
           </el-icon>
           <span class="iconText">{{watch}}</span>
         </div>
@@ -41,8 +43,6 @@ export default {
   components:{
     Calendar,
     Star,
-    //todo 这里view组件不好使
-    // eslint-disable-next-line vue/no-unused-components
     View,
     User,
   },
@@ -52,9 +52,9 @@ export default {
     href:String,
     imgHref:String,
     date:String,
-    star:String,
+    star:Number,
     author:String,
-    watch:String,
+    watch:Number,
   }
 }
 </script>
@@ -68,6 +68,7 @@ export default {
 .indexBtm{
   display: flex;
   margin-top: 5px;
+  padding-right: 5%;
   i, span {
     display: inherit;
     vertical-align: middle;
@@ -79,7 +80,7 @@ export default {
 }
 .iconText{
   margin: 0;
-  padding: 0;
+  padding-top: 1px;
   align-items: center;
   .pr-font-family;
   .pr-font-color;
@@ -90,6 +91,7 @@ export default {
 }
 .articleImg{
   width: 200px;
+  height: 135px;
   box-shadow: 0 5px 11px 0 rgb(0 0 0 / 18%), 0 4px 15px 0 rgb(0 0 0 / 15%);
   margin-right: 15px;
   border-radius: 3px;
@@ -97,7 +99,9 @@ export default {
 .indexHeader{
   text-align: left;
   .pr-font-family;
-  margin: 0 0 10px;
+  margin: 0 0 5px;
+  height: 35px;
+  overflow: hidden;
   a{
     color: black;
     text-decoration: none;

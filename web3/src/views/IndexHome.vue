@@ -26,7 +26,7 @@
           :date="item.time"
           :star="item.articleStar"
           :watch="item.articleWatch"
-          img-href='http://localhost:8000/api/getImages/8358a6a5dc5abf72235a46d2945ce0f9'
+          :img-href="item.imgHref"
       >
 
       </article-show>
@@ -39,6 +39,7 @@
   import NavBar from "@/components/NavBar";
   import {onMounted, ref} from "vue";
   import {selectArticle,selectStar} from "@/axios/request";
+  import {regularMatch} from "@/common/js/global";
 
   export default {
     components:{articleShow,NavBar},
@@ -56,18 +57,22 @@
         let watchs = 0;
         for (let i = 0; i < dataStar.value.length; i++) {
           watchs += dataStar.value[i].articleWatch;
+          let imgHref = regularMatch(data.value[i].article)
+          if (imgHref != null){
+            data.value[i].imgHref = imgHref;
+          }
         }
         articleViewCount.value = watchs;
         for (let i = 0; i < data.value.length; i++) {
           for (let j = 0; j <dataStar.value.length; j++) {
-            if ( data.value[i].id == dataStar.value[i].articleId){
+            if ( data.value[i].id === dataStar.value[i].articleId){
               data.value[i].articleStar = dataStar.value[i].articleStar
               data.value[i].articleWatch = dataStar.value[i].articleWatch
             }
           }
         }
-        console.log(data.value)
       }
+
       onMounted(()=>{
         update();
       })
@@ -77,7 +82,8 @@
         update,
         data,
         dataStar,
-        url
+        url,
+        regularMatch
       }
     }
   }
@@ -120,7 +126,6 @@
     .bk-color;
   }
   .el-main{
-    margin-left: 400px;
-    margin-right: 400px;
+    .pr-main-center;
   }
 </style>
